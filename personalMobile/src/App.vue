@@ -1,16 +1,31 @@
 <template>
-  <div id="app">
-    <router-view />
+  <div id="App">
+    <transition name="router-fade" mode="out-in">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    </transition>
+    <transition name="router-fade" mode="out-in">
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-  name: "App"
-};
+  name: 'App'
+}
 </script>
 
 <style lang="scss">
-    @import "./style/common.scss";
-    @import './style/color.scss';
+@import "./style/common.scss";
+@import "./style/color.scss";
+.router-fade-enter-active,
+.router-fade-leave-active {
+  transition: opacity 0.5s;
+}
+.router-fade-enter,
+.router-fade-leave-active {
+  opacity: 0;
+}
 </style>
